@@ -3,12 +3,19 @@ import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { engine } from 'express-handlebars'
 import { faker } from '@faker-js/faker'
+import session from 'express-session'
 const app = express()
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views')
+
+app.use(session({
+    secret: 'authentification',
+    resave: false,
+    saveUninitialized: true
+}))
 
 //Routeris
 // app.get('/', function (req, res) {   //req - gaunama uzklausa
@@ -39,6 +46,7 @@ app.set('views', './views')
 //------------prisingiam ir patenkam i admin------------
 
 app.get('/login', function (req, res) {
+    //tikriname ar suvesti teisingi duomenys
     let message = ''
     if (Object.keys(req.query).length > 0) {
         if (req.query.login != '' &&
@@ -46,7 +54,10 @@ app.get('/login', function (req, res) {
             req.query.login === 'admin@inv.lt' &&
             req.query.password === '1234'
         ) {
-            res.redirect('http://localhost:3000/administratorius')
+
+            req.session.loggedIn = true
+            req.session.userName = 'admin@inv.lt'
+            res.redirect('http://localhost:3000/people')
             return
         } else {
             message = 'Neteisingi prisijungimo duomenys'
@@ -60,19 +71,29 @@ app.get('/administratorius', function (req, res) {
 })
 
 app.get('/people', function (req, res) {
-    let zmones = []
-    for (let i = 0; i < 100; i++) {
-        zmones.push({
-            zmogusName: faker.name.firstName(),
-            zmogusLastName: faker.name.lastName(),
-            adress: faker.address.city(),
-            phone: faker.phone.phoneNumber(),
-            email: faker.internet.email()
-        })
+    //panaikiname sesijos reiksmes individuoaliai
+    //req.session.loggedIn = null
+    //req.session.userName = null
+
+    //panaikiname visa sesija
+    //req.sesssion.destroy()
+    if (req.session.loggedIn) {
+        let zmones = []
+        for (let i = 0; i < 100; i++) {
+            zmones.push({
+                zmogusName: faker.name.firstName(),
+                zmogusLastName: faker.name.lastName(),
+                adress: faker.address.city(),
+                phone: faker.phone.phoneNumber(),
+                email: faker.internet.email()
+            })
 
 
+        }
+        res.render('people', { zmones, user: req.session.userName })
+    } else {
+        res.redirect('/login')
     }
-    res.render('people', { zmones })
 })
 
 
