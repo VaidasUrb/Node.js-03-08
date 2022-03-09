@@ -1,0 +1,18 @@
+{{#if zmones}}
+<table>
+    <thead>
+        <th>Zmogus</th>
+    </thead>
+    <tbody>
+        {{#each zmones}}
+        <tr>
+            <td>{{this.zmogusName}}</td>
+            <td>{{this.zmogusLastName}}</td>
+            <td>{{this.adress}}</td>
+            <td>{{this.phone}}</td>
+            <td>{{this.email}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{/if}}
