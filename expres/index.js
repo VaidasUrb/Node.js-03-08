@@ -4,12 +4,29 @@ import { fileURLToPath } from 'url'
 import { engine } from 'express-handlebars'
 import { faker } from '@faker-js/faker'
 import session from 'express-session'
+import multer from 'multer'
 const app = express()
-const __dirname = dirname(fileURLToPath(import.meta.url))
+const storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, './uploads')
+    },
+    filename: function (req, file, callback) {
+        let namesplit = file.originalname.split('.')
+        let filename = file.fieldname + Date.now() + '.' +
+            namesplit[namesplit.length - 1]
+        callback(null, filename)
+    }
+})
+const upload = multer({ storage: storage })
+
+//const __dirname = dirname(fileURLToPath(import.meta.url))
 
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views')
+
+
+app.use(express.urlencoded({ extended: false }))
 
 app.use(session({
     secret: 'authentification',
@@ -46,15 +63,47 @@ app.use(session({
 //------------prisingiam ir patenkam i admin------------
 
 app.get('/login', function (req, res) {
-    //tikriname ar suvesti teisingi duomenys
-    let message = ''
-    if (Object.keys(req.query).length > 0) {
-        if (req.query.login != '' &&
-            req.query.password != '' &&
-            req.query.login === 'admin@inv.lt' &&
-            req.query.password === '1234'
-        ) {
+    let message = req.query.message
+    if (req.session.loggedIn === true) {
+        res.redirect('http://localhost:3000/people')
+        return
+    }
 
+    // //tikriname ar suvesti teisingi duomenys
+    // let message = ''
+
+    // if (Object.keys(req.query).length > 0) {
+    //     if (req.query.login != '' &&
+    //         req.query.password != '' &&
+    //         req.query.login === 'admin@inv.lt' &&
+    //         req.query.password === '1234'
+    //     ) {
+
+    //         req.session.loggedIn = true
+    //         req.session.userName = 'admin@inv.lt'
+    //         res.redirect('http://localhost:3000/people')
+    //         return
+    //     } else {
+    //         message = 'Neteisingi prisijungimo duomenys'
+    //     }
+    // }
+    res.render('login', { message }) //nurodome grazinama turini atgal i narsykle
+})
+
+// app.get('/administratorius', function (req, res) {
+//     res.sendFile(__dirname + '/templates/admin.html') //nurodome grazinama turini atgal i narsykle
+// })
+
+app.post('/login', function (req, res) {
+    //tikriname ar suvesti teisingi duomenys
+    let message = 'Iveskite prisijungim duomenis'
+
+    if (Object.keys(req.body).length > 0) {
+        if (req.body.login != '' &&
+            req.body.password != '' &&
+            req.body.login === 'admin@inv.lt' &&
+            req.body.password === '1234'
+        ) {
             req.session.loggedIn = true
             req.session.userName = 'admin@inv.lt'
             res.redirect('http://localhost:3000/people')
@@ -63,12 +112,10 @@ app.get('/login', function (req, res) {
             message = 'Neteisingi prisijungimo duomenys'
         }
     }
-    res.render('login', { message }) //nurodome grazinama turini atgal i narsykle
+    res.redirect('http://localhost:3000/login/?message=' + message)
 })
 
-app.get('/administratorius', function (req, res) {
-    res.sendFile(__dirname + '/templates/admin.html') //nurodome grazinama turini atgal i narsykle
-})
+
 
 app.get('/people', function (req, res) {
     //panaikiname sesijos reiksmes individuoaliai
@@ -96,6 +143,27 @@ app.get('/people', function (req, res) {
     }
 })
 
+//Atsijungimo nuoroda
+app.get('/logout', function (req, res) {
+    req.session.loggedIn = null
+    req.session.userName = null
+
+    res.redirect('/login')
+})
+
+//Post Upload
+app.post('/post-upload', upload.single('photo'), function (req, res) {
+
+    if (req.body.post_title === undefined ||
+        req.body.post_content === undefined ||
+        req.body.date === undefined
+    ) {
+        res.send('Uzpildyti ne visi langeliai')
+        return
+
+    }
+    res.send(req.body)
+})
 
 //---------------------------------------------------------------------
 
