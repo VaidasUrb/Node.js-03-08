@@ -1,5 +1,5 @@
 {
-  "name": "filesystem",
+  "name": "new-npm",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -12,7 +12,6 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.3",
-    "express-handlebars": "^6.0.3",
-    "handlebars": "^4.7.7"
+    "express-handlebars": "^6.0.3"
   }
 }

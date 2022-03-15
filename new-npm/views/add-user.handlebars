@@ -1,0 +1,29 @@
+{{#if message}}
+    <div style="background: {{status}}; color: #fff; padding: 1rem">
+        {{message}}
+    </div>
+{{/if}}
+<form action=""method="POST" >
+    <div>
+        <label for="">Vardas:</label>
+        <input type="text" name="vardas">
+    </div>
+     <div>
+        <label for="">Pavarde:</label>
+        <input type="text" name="pavarde">
+    </div>
+     <div>
+        <label for="">Telefono numeris:</label>
+        <input type="text" name="tel_nr">
+    </div>
+    <div>
+        <label for="">Elekroninis pastas:</label>
+        <input type="email" name="email">
+    </div>
+    <div>
+        <label for="">Adresas:</label>
+        <input type="text" name="adresas">
+    </div>
+
+    <button type="submit">Issiusti</button>
+</form>
