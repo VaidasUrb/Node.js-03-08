@@ -1,0 +1,27 @@
+<table class="table">
+    <thead>
+        <th>#</th>
+        <th>Vardas</th>
+        <th>Pavarde</th>
+        <th>Telefonas</th>
+        <th>E-mail</th>
+        <th>Adresas</th>
+        <th>Veiskmai</th>
+    </thead>
+    <tbody>
+         {{#each dataArray}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{vardas}}</td>
+            <td>{{pavarde}}</td>
+            <td>{{tel_nr}}</td>
+            <td>{{email}}</td>
+            <td>{{adresas}}</td>
+            <td>
+                <a href="/edit-user/{{id}}" class="btn btn-success">Edit</a>
+                <button data-id="{{id}}" class="btn btn-danger delete-button">Delete</button>
+            </td>
+        </tr>
+         {{/each}}
+    </tbody>
+</table>

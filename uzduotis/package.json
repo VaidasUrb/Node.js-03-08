@@ -1,18 +1,18 @@
 {
-  "name": "new-npm",
+  "name": "uzduotis",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ."
+    "start": "nodemon --ignore people.json"
   },
   "author": "",
   "type": "module",
   "license": "ISC",
   "dependencies": {
-    "chalk": "^5.0.1",
     "express": "^4.17.3",
-    "express-handlebars": "^6.0.3"
+    "express-handlebars": "^6.0.3",
+    "nodemon": "^2.0.15"
   }
 }

@@ -1,28 +1,24 @@
-{{#if message}}
-    <div style="background: {{status}}; color: #fff; padding: 1rem">
-        {{message}}
-    </div>
-{{/if}}
+
 <form action=""method="POST"  style="padding:10px; text-align: center;">
     <div style="margin: 10px;">
         <label for="">Vardas:</label>
-        <input type="text" name="vardas">
+        <input type="text" name="vardas" value="{{data.vardas}}">
     </div>
      <div style="margin: 10px;">
         <label for="">Pavarde:</label>
-        <input type="text" name="pavarde">
+        <input type="text" name="pavarde" value="{{data.pavarde}}">
     </div>
      <div style="margin: 10px;">
         <label for="">Telefono numeris:</label>
-        <input type="text" name="tel_nr">
+        <input type="text" name="tel_nr" value="{{data.tel_nr}}">
     </div>
     <div style="margin: 10px;">
         <label for="">Elekroninis pastas:</label>
-        <input type="email" name="email">
+        <input type="email" name="email" value="{{data.email}}">
     </div>
     <div style="margin: 10px;">
         <label for="">Adresas:</label>
-        <input type="text" name="adresas">
+        <input type="text" name="adresas" value="{{data.adresas}}">
     </div>
 
     <button type="submit" class="btn btn-primary">Issiusti</button>
