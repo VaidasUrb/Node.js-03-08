@@ -45,7 +45,7 @@ const getData = () => {
                     html += `<li class="clearfix" data-id="${value.id}">
                             <input type="checkbox" class="mass-delete" />
                             <a class="mark-done ${done}">${value.task}</a>
-                            <a class="btn btn-danger float-end delete-todo">Trinti</a>
+                            <a class="btn btn-danger fa fa-trash-o float-end delete-todo">Trinti</a>
                             <a class="btn btn-primary float-end update-todo">Redaguoti</a>
                         </li>`
                 })
@@ -70,21 +70,7 @@ const getData = () => {
                     })
                 })
 
-                document.querySelectorAll('.delete-todo').forEach(element => {
-                    let id = element.parentElement.getAttribute('data-id')
 
-                    element.addEventListener('click', () => {
-
-                        transferData(url + '/delete-todo/' + id, 'DELETE')
-                            .then(resp => {
-                                if (resp.status === 'success') {
-                                    getData()
-                                }
-                                messages(resp.message, resp.status)
-                            })
-
-                    })
-                })
 
                 document.querySelectorAll('.update-todo').forEach(element => {
                     let id = element.parentElement.getAttribute('data-id')

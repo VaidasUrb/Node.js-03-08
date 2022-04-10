@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "dead-server": "^1.0.6"
+  },
+  "name": "mongobb-front",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "dead-server --port=3003 --host=localhost"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

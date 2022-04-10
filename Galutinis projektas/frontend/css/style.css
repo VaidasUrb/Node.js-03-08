@@ -1,0 +1,43 @@
+body {
+    background: rgb(133, 190, 236);
+}
+
+h1 {
+    font-style: italic;
+    color: chocolate;
+    text-align: center;
+}
+
+li {
+    border: 1px solid chocolate;
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.checkout-button {
+    margin-top: 20px;
+}
+
+#newOrderForm {
+    display: none;
+}
+
+#newOrderForm.show {
+    display: block;
+}
+
+.actions {
+    padding-top: 2rem;
+}
+
+.ordersList {
+    padding-top: 2rem;
+}
+
+#newOrderForm .totals {
+    font-size: 22px;
+    font-weight: 600;
+    text-align: right;
+    padding: 1rem 0;
+}
